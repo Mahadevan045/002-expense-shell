@@ -46,12 +46,12 @@ VALIDATE $? "Enabled MySQL Server"
 systemctl start mysqld &>>$LOG_FILE
 VALIDATE $? "Started MySQL Server"
 
-mysql -h   mysql.daws90s.online  -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
+mysql -h mysql.daws90s.online -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
 if [ $? -ne 0 ]
 then 
-    echo "MYSQL root password is not setup,setting now"
+    echo "MYSQL root password is not setup,setting now" &>>$LOG_FILE
     mysql_secure_installation --set-root-pass ExpenseApp@1
     VALIDATE $? "Setting up root password"
 else
-    echo -e "MYSQL root password is already setup,... $Y SKIPPING $N" | tee -a &>>$LOG_FILE
+    echo -e "MYSQL root password is already setup,... $Y SKIPPING $N" | tee -a $LOG_FILE
 fi
